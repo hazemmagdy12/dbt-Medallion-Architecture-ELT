@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: stg_mongo_burgers
+    description: '{{ doc("stg_mongo_burgers_doc") }}'
+    columns:
+      - name: burger_id
+        tests:
+          - unique
+          - not_null
+      - name: price
+        tests:
+          - not_null
+
+  - name: stg_burger_ingredients
+    description: '{{ doc("stg_burger_ingredients_doc") }}'
+    columns:
+      - name: burger_ingredient_id 
+        tests:
+          - unique
+          - not_null
+      - name: burger_id
+        tests:
+          - not_null
+          - relationships: {to: ref('stg_mongo_burgers'), field: burger_id}
+
+  - name: stg_burger_orders
+    description: '{{ doc("stg_burger_orders_doc") }}'
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: burger_id
+        tests:
+          - not_null
+          - relationships: {to: ref('stg_mongo_burgers'), field: burger_id}
+
+  - name: stg_cassandra_activity
+    description: '{{ doc("stg_cassandra_activity_doc") }}'
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: burger_id
+
+  - name: stg_redis_carts
+    description: '{{ doc("stg_redis_carts_doc") }}'
+    columns:
+      - name: cart_item_id
+        tests:
+          - unique
+          - not_null
+      - name: item_id
+        tests:
+          - not_null
+
+  - name: stg_neo4j_graph
+    description: '{{ doc("stg_neo4j_graph_doc") }}'
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_retail_store_sales
+    description: '{{ doc("stg_retail_store_sales_doc") }}'
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null

@@ -1,4 +1,13 @@
 .env
-target/
-dbt_packages/
-logs/
+.env.*
+**/.dbt/.user.yml
+
+**/target/
+**/dbt_packages/
+**/logs/
+**/artifacts/
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

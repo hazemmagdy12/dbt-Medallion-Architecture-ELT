@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  # 1. كوبري قمع التحويل
+  - name: int_burger_conversion_funnel
+    description: '{{ doc("int_burger_conversion_funnel_doc") }}'
+    columns:
+      - name: burger_id
+        tests:
+          - unique
+          - not_null
+
+  # 2. كوبري السلال بأسعارها
+  - name: int_carts_with_prices
+    description: '{{ doc("int_carts_with_prices_doc") }}'
+    columns:
+      - name: cart_item_id
+        tests:
+          - unique
+          - not_null
+      - name: total_item_price
+
+  # 3. كوبري المنيو مع المكونات
+  - name: int_menu_with_ingredients
+    description: '{{ doc("int_menu_with_ingredients_doc") }}'
+    columns:
+      - name: burger_id
+        tests:
+          - unique
+          - not_null

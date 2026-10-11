@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  # 1. المبيعات النهائية
+  - name: mart_burger_sales
+    description: '{{ doc("mart_burger_sales_doc") }}'
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        tests:
+          - not_null
+
+  # 2. تحليلات السلال المهجورة
+  - name: mart_cart_analytics
+    description: '{{ doc("mart_cart_analytics_doc") }}'
+    columns:
+      - name: cart_item_id
+        tests:
+          - unique
+          - not_null
+
+  # 3. داشبورد التسويق
+  - name: mart_marketing_funnel
+    description: '{{ doc("mart_marketing_funnel_doc") }}'
+    columns:
+      - name: burger_id
+        tests:
+          - unique
+          - not_null

@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: bronze_csv         # ده الاسم اللي هننادي عليه في كود الـ SQL
+    schema: bronze_csv       # ده اسم الاسكيما الحقيقية اللي موجودة في Neon
+    tables:
+      - name: retail_store_sales   # ده اسم الجدول الخام جوه الاسكيما
+      
+  - name: bronze_burger_app
+    schema: bronze_burger_app
+    
+    # 1. إعدادات الفريشنيس العامة اللي هتتطبق على معظم جداول السورس ده
+    freshness:
+      warn_after: {count: 12, period: hour}
+      error_after: {count: 24, period: hour}
+      
+    # 2. اسم عمود الوقت اللي dbt هيراقب منه (مهم جداً: غير 'synced_at' باسم عمود الوقت الحقيقي اللي عندك في الجداول)
+    loaded_at_field: synced_at 
+    
+    tables:
+      - name: raw_burger_orders_key_value
+      - name: raw_mongo_burgers
+      - name: raw_neo4j_graph
+      - name: raw_redis_carts
+      
+      - name: raw_cassandra_activity
+        # 3. إعدادات فريشنيس استثنائية لجدول كاساندرا لوحده (لأن داتا التفاعل سريعة ومفروض تتحدث كل ساعة)
+        freshness:
+          warn_after: {count: 1, period: hour}
+          error_after: {count: 6, period: hour}
+        # لو جدول كاساندرا فيه عمود وقت اسمه مختلف عن 'synced_at' تقدر تكتبه هنا كده:
+        # loaded_at_field: activity_timestamp
